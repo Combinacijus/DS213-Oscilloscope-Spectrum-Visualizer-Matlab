@@ -64,28 +64,28 @@ function DS213_Spectrum_Visualizer()
         % ------------------------Plot signal  ------------------------
         axes(hAxTime);
         cla;
-        timeLabel = 'Laikas, s';
+        timeLabel = 'Time, s';
         
         % Check the range of time values
         timeMax = max(time(plot_range));
 
         if timeMax < 1e-6  % less than 1 microsecond
             timeDisplay = time(plot_range) * 1e9;  % convert to ns
-            timeLabel = 'Laikas, ns';
+            timeLabel = 'Time, ns';
         elseif timeMax < 1e-3  % less than 1 millisecond
             timeDisplay = time(plot_range) * 1e6;  % convert to us
-            timeLabel = 'Laikas, us';
+            timeLabel = 'Time, us';
         elseif timeMax < 1  % less than 1 second
             timeDisplay = time(plot_range) * 1e3;  % convert to ms
-            timeLabel = 'Laikas, ms';
+            timeLabel = 'Time, ms';
         else
             timeDisplay = time(plot_range);  % leave as seconds
-            timeLabel = 'Laikas, s';
+            timeLabel = 'Time, s';
         end
         plot(timeDisplay, data(plot_range, selectedChannel), 'k', 'LineWidth', 1, 'Color', [0, 0, 0, 1]);
         % title(['Channel ', char(selectedChannel+64), ' Waveform']);
         xlabel(timeLabel);
-        ylabel('Įtampa, V');
+        ylabel('Voltage, V');
         grid on;
 
         % --------------------- Plot frequency spectrum -------------------
@@ -107,8 +107,8 @@ function DS213_Spectrum_Visualizer()
 
         ylim([lowerBound upperBound]);
         % title(['Channel ', char(selectedChannel+64), ' Spectrum']);
-        xlabel('Dažnis, Hz', 'FontWeight', 'bold');
-        ylabel('dB', 'FontWeight', 'bold');
+        xlabel('Frequency, Hz');  % , 'FontWeight', 'bold'
+        ylabel('dB'); % , 'FontWeight', 'bold'
         xlim([0, 16000]);
         grid on;
     end
@@ -149,7 +149,7 @@ function DS213_Spectrum_Visualizer()
         if any(isnan(volt_div))
             warning(['Can not extract volt_div from: ', mat2str(volt_div)]);
         end
-        
+
         % Convert 8-bit values to voltage
         for i = 1:4
             if i <= width(rawData)  % Check if the channel exists in the CSV
