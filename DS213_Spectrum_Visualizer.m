@@ -173,7 +173,9 @@ function DS213_Spectrum_Visualizer()
             spectrum = abs(fft(data(plot_range, :))) * sample_period;
         end
 
-        spectrum_normalized = spectrum / max(spectrum(:)); % Normalizing the spectrum by its maximum value
+        % spectrum_normalized = spectrum / max(spectrum(:)); % Normalizing the spectrum by its maximum value
+        spectrum_normalized = spectrum; % Don't do normalization because it might make misleading comparisons between two signals
+        
         spectrum_dB = 20 * log10(spectrum_normalized); % Converting to dB with peak at 0 dB
         spectrum = spectrum_dB;
         
